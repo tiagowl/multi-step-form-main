@@ -1,17 +1,61 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div class="container bg-white mt-5 h-75 ps-4 rounded-4 pt-3 mb-5 pb-3">
+    <div class="row">
+      <div class="col-md-3 bg-transparent rounded-4">
+        <ul class="list-group mt-4">
+          <li class="list-group-item d-flex justify-content-start bg-transparent border-0 mb-2">
+            <div class="d-flex">
+              <div :class="['circle-size', 'fs-6', 'border', 'border-white', 'rounded-circle', 'd-flex', 'justify-content-center', 'align-items-center',{'background-circle': route.path === '/', 'text-white': route.path !== '/', 'text-dark': route.path === '/'}]" >1</div>
+              <div class="d-flex flex-column ms-2">
+                <p class="step-text-size text-gray" >STEP 1</p>
+                <p class="step-text-size text-white" >YOUR INFO</p>
+              </div>
+            </div>
+          </li>
+          <li class="list-group-item d-flex justify-content-start bg-transparent border-0 mb-2">
+            <div class="d-flex">
+              <div :class="['circle-size', 'fs-6', 'border', 'border-white', 'rounded-circle', 'd-flex', 'justify-content-center', 'align-items-center',{'background-circle': route.path === '/plans', 'text-white': route.path !== '/plans', 'text-dark': route.path === '/plans'}]" >2</div>
+              <div class="d-flex flex-column ms-2">
+                <p class="step-text-size text-gray" >STEP 2</p>
+                <p class="step-text-size text-white" >SELECT PLAN</p>
+              </div>
+            </div>
+          </li>
+          <li class="list-group-item d-flex justify-content-start bg-transparent border-0 mb-2">
+            <div class="d-flex">
+              <div :class="['circle-size', 'fs-6', 'border', 'border-white', 'rounded-circle', 'd-flex', 'justify-content-center', 'align-items-center',{'background-circle': route.path === '/addons', 'text-white': route.path !== '/addons', 'text-dark': route.path === '/addons'}]" >3</div>
+              <div class="d-flex flex-column ms-2">
+                <p class="step-text-size text-gray" >STEP 3</p>
+                <p class="step-text-size text-white" >ADD-ONS</p>
+              </div>
+            </div>
+          </li>
+          <li class="list-group-item d-flex justify-content-start bg-transparent border-0 mb-2">
+            <div class="d-flex">
+              <div :class="['circle-size', 'fs-6', 'border', 'border-white', 'rounded-circle', 'd-flex', 'justify-content-center', 'align-items-center',{'background-circle': route.path === '/summary', 'text-white': route.path !== '/summary', 'text-dark': route.path === '/summary'}]" >4</div>
+              <div class="d-flex flex-column ms-2">
+                <p class="step-text-size text-gray" >STEP 4</p>
+                <p class="step-text-size text-white" >SUMMARY</p>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div class="col-md-9 main-padding pt-5" style="height: auto">
+        <RouterView></RouterView>
+      </div>
+    </div>
+  </div>
 </template>
 
-<script>
-import HelloWorld from './components/HelloWorld.vue'
+<script setup>
 
-export default {
-  name: 'App',
-  components: {
-    HelloWorld
-  }
-}
+import {useRoute} from "vue-router";
+
+const route = useRoute();
+
+console.log(route.path);
+
 </script>
 
 <style>
@@ -19,8 +63,41 @@ export default {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+  height: auto;
+}
+
+.circle-size{
+  height: 2.5rem;
+  width: 2.5rem;
+}
+
+.step-text-size{
+  font-size: 0.9rem;
+  margin-bottom: -0.4rem;
+}
+
+.text-gray{
+  color: rgb(180, 178, 178);
+}
+
+.col-md-3{
+  background-image: url("../assets/images/bg-sidebar-desktop.svg");
+  height: 100vh;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.background-circle{
+  background-color: hsl(217, 100%, 97%);
+}
+
+.main-padding{
+  padding-left: 8rem;
+}
+
+.form-label{
+  font-size: 0.9rem;
+  color: hsl(213, 96%, 18%)
 }
 </style>
