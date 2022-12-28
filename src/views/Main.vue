@@ -1,22 +1,27 @@
 <template>
-        <Content navigate="/plans" :goBack="true" title="Personal info" subTitle="Please provide your name, email address, and phone number." >
+        <Content navigate="/plans" :nextAction="{mutation: 'subscription', payload: {name: name, email: email, phone: phone}}" :goBack="false" title="Personal info" subTitle="Please provide your name, email address, and phone number." >
             <div class="mb-3">
                 <label for="exampleFormControlInput1" class="form-label">Name</label>
-                <input type="text" class="form-control form-control-lg w-75" id="exampleFormControlInput1">
+                <input v-model="name" type="text" class="form-control form-control-lg w-75" id="exampleFormControlInput1">
             </div>
             <div class="mb-3">
                 <label for="exampleFormControlInput1" class="form-label">Email Adress</label>
-                <input type="email" class="form-control form-control-lg w-75" id="exampleFormControlInput1">
+                <input v-model="email" type="email" class="form-control form-control-lg w-75" id="exampleFormControlInput1">
             </div>
             <div class="mb-5">
                 <label for="exampleFormControlInput1" class="form-label">Phone Number</label>
-                <input type="text" class="form-control form-control-lg w-75" id="exampleFormControlInput1">
+                <input v-model="phone" type="text" class="form-control form-control-lg w-75" id="exampleFormControlInput1">
             </div>
         </Content>
 </template>
 
 <script setup >
+    import {ref} from "vue"
     import Content from '@/components/Content.vue';
+
+    const name = ref("");
+    const email = ref("");
+    const phone = ref("");
 </script>
 
 <style>

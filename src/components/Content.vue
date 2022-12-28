@@ -12,14 +12,17 @@
 
 import {defineProps} from 'vue';
 import {useRouter} from 'vue-router';
+import {useStore} from "vuex";
 
 const router = useRouter();
+const store = useStore();
 
 const navigate = () => {
+    store.commit(props.nextAction.mutation, props.nextAction.payload)
     return router.push({path: props.navigate});
 }
 
-const props = defineProps({title: String, subTitle: String, goBack: Boolean, navigate: String});
+const props = defineProps({title: String, subTitle: String, goBack: Boolean, navigate: String, nextAction: {mutation: String, payload: Object}});
 
 </script>
 

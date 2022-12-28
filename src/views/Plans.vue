@@ -1,5 +1,5 @@
 <template>
-    <Content navigate="/addons" :go-back="true" title="Select your plan" subTitle="You have the option of monthly or yearly biling." >
+    <Content navigate="/addons" :go-back="true" :nextAction="{mutation: '', payload: {}}" title="Select your plan" subTitle="You have the option of monthly or yearly biling." >
         <ul class="list-group list-group-horizontal mb-3">
             <li class="list-group-item border-0 w-25 me-2 ps-0">
                 <div class="card card-border pb-0">
@@ -26,7 +26,7 @@
             <li class="list-group-item border-0 w-25 ps-0">
                 <div class="card card-border pb-0">
                     <div class="card-body pb-0">
-                        <div class="mb-5 mt-2 bg-primary rounded-circle circle d-flex justify-content-center align-items-center">
+                        <div style="background-color: cornflowerblue;" class="mb-5 mt-2 rounded-circle circle d-flex justify-content-center align-items-center">
                             <i class="bi bi-dpad-fill text-white fs-4"></i>
                         </div>
                         <p style="color: hsl(213, 96%, 18%)" class="fw-bold" >Pro</p>
@@ -49,7 +49,16 @@
 
 <script setup >
 
+import {ref} from "vue";
 import Content from "@/components/Content.vue";
+
+const monthly = ref(true);
+
+const plans = ref([
+    {icon: "joystick", name: "Arcade", price: `${monthly.value ? "$9/mo" : "$90/yr"}`, bg: "orange"},
+    {icon: "controller", name: "Advanced", price: `${monthly.value ? "$12/mo" : "$120/yr"}`, bg: "deeppink"},
+    {icon: "dpad-fill", name: "Pro", price: `${monthly.value ? "$15/mo" : "$150/yr"}`, bg: "cornflowerblue"}
+])
 
 </script>
 
