@@ -1,45 +1,25 @@
 <template>
-    <Content navigate="/addons" :go-back="true" :nextAction="{mutation: '', payload: {}}" title="Select your plan" subTitle="You have the option of monthly or yearly biling." >
-        <ul class="list-group list-group-horizontal mb-3">
-            <li class="list-group-item border-0 w-25 me-2 ps-0">
-                <div class="card card-border pb-0">
-                    <div class="card-body pb-0">
-                        <div style="background-color: orange" class="mb-5 mt-2 rounded-circle circle d-flex justify-content-center align-items-center">
-                            <i class="bi bi-joystick text-white fs-4"></i>
+    <Content navigate="/addons" :go-back="true" :nextAction="{mutation: 'choosePlan', payload: plans[planIndex]}" title="Select your plan" subTitle="You have the option of monthly or yearly biling." >
+        <ul class="list-group list-group-horizontal-sm mb-3">
+            <li v-for="(plan, index) in plans" class="list-group-item border-0 list-width me-sm-2 ps-0">
+                <div style="cursor: pointer" @click="choosePlan(index)" :class="['card', 'pb-sm-0', 'plan-card',{'card-border': choose === false && planIndex !== index, 'border-card': choose && planIndex === index,'bg-card': choose && planIndex === index }]">
+                    <div class="card-body d-flex flex-sm-column pb-0">
+                        <div :style="{backgroundColor: plan.bg}" class="mb-5 me-3 mt-sm-2 rounded-circle circle d-flex justify-content-center align-items-center">
+                            <i :class="['bi', `bi-${plan.icon}`, 'text-white', 'fs-4']"></i>
                         </div>
-                        <p style="color: hsl(213, 96%, 18%)" class="fw-bold" >Arcade</p>
-                        <p class="text-secondary" >$9/mo</p>
-                    </div>
-                </div>
-            </li>
-            <li class="list-group-item border-0 w-25 me-2 ps-0">
-                <div class="card card-border pb-0">
-                    <div class="card-body pb-0">
-                        <div style="background-color: deeppink" class="mb-5 mt-2 rounded-circle circle d-flex justify-content-center align-items-center">
-                            <i class="bi bi-controller text-white fs-4"></i>
+                        <div class="d-flex flex-column">
+                            <p style="color: hsl(213, 96%, 18%)" class="fw-bold" >{{ plan.name }}</p>
+                            <p class="text-secondary price-mobile" >{{ plan.price }}</p>
                         </div>
-                        <p style="color: hsl(213, 96%, 18%)" class="fw-bold" >Advanced</p>
-                        <p class="text-secondary" >$12/mo</p>
-                    </div>
-                </div>
-            </li>
-            <li class="list-group-item border-0 w-25 ps-0">
-                <div class="card card-border pb-0">
-                    <div class="card-body pb-0">
-                        <div style="background-color: cornflowerblue;" class="mb-5 mt-2 rounded-circle circle d-flex justify-content-center align-items-center">
-                            <i class="bi bi-dpad-fill text-white fs-4"></i>
-                        </div>
-                        <p style="color: hsl(213, 96%, 18%)" class="fw-bold" >Pro</p>
-                        <p class="text-secondary" >$15/mo</p>
                     </div>
                 </div>
             </li>
         </ul>
-        <div class="card w-75 border-0 mb-5" style="background-color: hsl(217, 100%, 97%)">
+        <div class="card switch-width border-0 mb-sm-5" style="background-color: hsl(217, 100%, 97%)">
             <div class="card-body pt-1 pb-1 d-flex justify-content-center align-items-center">
                 <p class="mt-3 me-2" >Monthly</p>
                 <div class="form-check form-switch">
-                    <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
+                    <input v-model="monthly" class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
                     <label class="form-check-label" for="flexSwitchCheckDefault">Yearly</label>
                 </div>
             </div>
@@ -49,16 +29,43 @@
 
 <script setup >
 
-import {ref} from "vue";
+import {ref, watch} from "vue";
 import Content from "@/components/Content.vue";
 
-const monthly = ref(true);
+const monthly = ref(false);
+const choose = ref(false);
+const planIndex = ref(0);
 
 const plans = ref([
-    {icon: "joystick", name: "Arcade", price: `${monthly.value ? "$9/mo" : "$90/yr"}`, bg: "orange"},
-    {icon: "controller", name: "Advanced", price: `${monthly.value ? "$12/mo" : "$120/yr"}`, bg: "deeppink"},
-    {icon: "dpad-fill", name: "Pro", price: `${monthly.value ? "$15/mo" : "$150/yr"}`, bg: "cornflowerblue"}
+    {icon: "joystick", name: "Arcade", price: "$9/mo", bg: "orange", duration: "monthly"},
+    {icon: "controller", name: "Advanced", price: "$12/mo", bg: "deeppink", duration: "monthly"},
+    {icon: "dpad-fill", name: "Pro", price: "$15/mo", bg: "cornflowerblue", duration: "monthly"}
 ])
+
+watch(monthly, (newValue, oldValue)=>{
+    if(newValue === false){
+        plans.value[0].price = "$9/mo";
+        plans.value[0].duration = "monthly";
+        plans.value[1].price = "$12/mo";
+        plans.value[1].duration = "monthly";
+        plans.value[2].price = "$15/mo";
+        plans.value[2].duration = "monthly";
+    }else{
+        plans.value[0].price = "$90/yr";
+        plans.value[0].duration = "yearly";
+        plans.value[1].price = "$120/yr";
+        plans.value[1].duration = "yearly";
+        plans.value[2].price = "$150/yr";
+        plans.value[2].duration = "yearly";
+    }
+})
+
+
+
+const choosePlan = (index) => {
+    choose.value = true;
+    planIndex.value = index;
+}
 
 </script>
 
@@ -69,12 +76,54 @@ const plans = ref([
     width: 3.5rem;
 }
 
+.switch-width{
+    width: 75%;
+}
+
 .card-border{
     border-color: rgb(218, 217, 217);
 }
 
 .card:hover{
     border-color: blue;
+}
+
+.border-card{
+    border-color: blue;
+}
+
+.bg-card{
+    background-color: hsl(217, 100%, 97%);
+}
+
+.list-width{
+    width: 25% !important;
+}
+
+@media(max-width: 414px){
+    .plan-card{
+        height: 5rem;
+    }
+
+    .circle{
+        height: 3rem;
+        width: 3rem;
+        margin-bottom: 2rem;
+    }
+
+    .price-mobile{
+        position: absolute;
+        top: 2.5rem;
+    }
+
+    .list-width{
+        width: 100% !important;
+        padding-right: 0;
+    }
+
+    .switch-width{
+        width: 100%;
+    }
 }
 
 </style>

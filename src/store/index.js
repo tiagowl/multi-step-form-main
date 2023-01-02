@@ -8,7 +8,7 @@ export default createStore({
     plan: {
       description: "",
       duration: "",
-      billing: 0
+      billing: ""
     },
     addons:[]
   },
@@ -19,6 +19,14 @@ export default createStore({
       state.name = payload.name;
       state.email = payload.email;
       state.phone = payload.phone;
+    },
+    choosePlan(state, payload){
+      state.plan.billing = payload.price;
+      state.plan.description = payload.name;
+      state.plan.duration = payload.duration;
+    },
+    addAddons(state, payload){
+      state.addons = payload;
     }
   },
   actions: {

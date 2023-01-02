@@ -1,46 +1,18 @@
 <template>
 
-    <Content navigate="/summary" title="Pick add-ons" subTitle="Add-ons help enhance your gaming experience." :goBack="true" >
-        <ul class="list-group w-75 mb-5">
-            <li class="list-group-item border-0 ps-0">
+    <Content navigate="/summary" :nextAction="{mutation: 'addAddons', payload: addonsChecked}" title="Pick add-ons" subTitle="Add-ons help enhance your gaming experience." :goBack="true" >
+        <ul class="list-group list-width mb-sm-5">
+            <li v-for="(addon, index) in addons" class="list-group-item border-0 ps-0 pe-0">
                 <div class="card">
-                    <div class="card-body d-flex justify-content-between">
+                    <div :class="['card-body', 'd-flex', 'justify-content-between', {'bg-card': addonsIndex.includes(index), 'border-card': addonsIndex.includes(index)}]">
                         <div class="form-check">
-                            <input class="form-check-input mt-3 me-3" type="checkbox" value="" id="flexCheckDefault">
-                            <label class="form-check-label text-secondary" for="flexCheckDefault">
-                               <strong class="addon-title" >Online Service</strong> <br>
-                                Access to multiplayer games
+                            <input @change="checkAddon(index)" class="form-check-input mt-sm-3 me-sm-3" type="checkbox" value="" id="flexCheckDefault">
+                               <label class="form-check-label text-secondary" for="flexCheckDefault">
+                               <strong class="addon-title" >{{ addon.title }}</strong> <br>
+                                {{ addon.description }}
                             </label>
                         </div>
-                        <p class="text-secondary mt-3" >+$1/mo</p>
-                    </div>
-                </div>
-            </li>
-            <li class="list-group-item border-0 ps-0">
-                <div class="card">
-                    <div class="card-body d-flex justify-content-between">
-                        <div class="form-check">
-                            <input class="form-check-input mt-3 me-3" type="checkbox" value="" id="flexCheckDefault">
-                            <label class="form-check-label text-secondary" for="flexCheckDefault">
-                               <strong class="addon-title" >Larger storage</strong> <br>
-                                Extra 1TB of cloud save
-                            </label>
-                        </div>
-                        <p class="text-secondary mt-3" >+$2/mo</p>
-                    </div>
-                </div>
-            </li>
-            <li class="list-group-item border-0 ps-0">
-                <div class="card">
-                    <div class="card-body d-flex justify-content-between">
-                        <div class="form-check">
-                            <input class="form-check-input mt-3 me-3" type="checkbox" value="" id="flexCheckDefault">
-                            <label class="form-check-label text-secondary" for="flexCheckDefault">
-                               <strong class="addon-title" >Customizable profile</strong> <br>
-                                Custom theme on your profile
-                            </label>
-                        </div>
-                        <p class="text-secondary mt-3" >+$2/mo</p>
+                        <p class="text-secondary mt-sm-3" >{{ addon.price }}</p>
                     </div>
                 </div>
             </li>
@@ -51,12 +23,54 @@
 
 <script setup>
 
+import {ref} from "vue";
 import Content from '@/components/Content.vue';
+import { useStore } from "vuex";
+
+const store = useStore();
+const addons = ref([
+    {title: "Online Service", description: "Access to multiplayer games", price: store.state.plan.duration === "monthly" ? "+1/mo" : "+10/yr"},
+    {title: "Larger storage", description: "Extra 1TB of cloud save", price: store.state.plan.duration === "monthly" ? "+2/mo" : "+20/yr"},
+    {title: "Customizable profile", description: "Custom theme on your profile", price: store.state.plan.duration === "monthly" ? "+2/mo" : "+20/yr"}
+])
+const addonsChecked = ref([]);
+const addonsIndex = ref([]);
+
+const checkAddon = (index) => {
+    addonsChecked.value.push(addons.value[index]);
+    addonsIndex.value.push(index);
+}
 
 </script>
 
 <style>
     .addon-title{
         color: hsl(213, 96%, 18%);
+    }
+
+    .border-card{
+        border-color: blue;
+    }
+
+    .list-width{
+        width: 75%;
+    }
+
+    .bg-card{
+        background-color: hsl(217, 100%, 97%);
+    }
+
+    @media(max-width: 414px){
+        .list-width{
+            width: 100%;
+        }
+
+        .form-check-label{
+            position: absolute;
+        }
+
+        .form-check-label,.addon-title{
+            font-size: 0.85rem;
+        }
     }
 </style>
