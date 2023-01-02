@@ -16,7 +16,7 @@
         </ul>
         <div class="w-75 d-flex justify-content-between mt-4 ps-3 pe-3 mb-5" >
             <p class="text-secondary" >Total(per month)</p>
-            <strong style="color: hsl(243, 100%, 62%)" >+$12/mo</strong>
+            <strong style="color: hsl(243, 100%, 62%)" >+${{ store.getters.totalPrice }}/mo</strong>
         </div>
     </Content>
 

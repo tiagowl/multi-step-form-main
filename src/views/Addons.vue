@@ -29,9 +29,9 @@ import { useStore } from "vuex";
 
 const store = useStore();
 const addons = ref([
-    {title: "Online Service", description: "Access to multiplayer games", price: store.state.plan.duration === "monthly" ? "+1/mo" : "+10/yr"},
-    {title: "Larger storage", description: "Extra 1TB of cloud save", price: store.state.plan.duration === "monthly" ? "+2/mo" : "+20/yr"},
-    {title: "Customizable profile", description: "Custom theme on your profile", price: store.state.plan.duration === "monthly" ? "+2/mo" : "+20/yr"}
+    {title: "Online Service", description: "Access to multiplayer games", price: store.state.plan.duration === "monthly" ? "+1/mo" : "+10/yr", priceValue: store.state.plan.duration === "monthly" ? 1 : 10},
+    {title: "Larger storage", description: "Extra 1TB of cloud save", price: store.state.plan.duration === "monthly" ? "+2/mo" : "+20/yr", priceValue: store.state.plan.duration === "monthly" ? 2 : 20},
+    {title: "Customizable profile", description: "Custom theme on your profile", price: store.state.plan.duration === "monthly" ? "+2/mo" : "+20/yr", priceValue: store.state.plan.duration === "monthly" ? 2 : 20}
 ])
 const addonsChecked = ref([]);
 const addonsIndex = ref([]);

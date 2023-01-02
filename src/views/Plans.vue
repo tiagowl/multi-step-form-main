@@ -37,26 +37,32 @@ const choose = ref(false);
 const planIndex = ref(0);
 
 const plans = ref([
-    {icon: "joystick", name: "Arcade", price: "$9/mo", bg: "orange", duration: "monthly"},
-    {icon: "controller", name: "Advanced", price: "$12/mo", bg: "deeppink", duration: "monthly"},
-    {icon: "dpad-fill", name: "Pro", price: "$15/mo", bg: "cornflowerblue", duration: "monthly"}
+    {icon: "joystick", name: "Arcade", price: "$9/mo", bg: "orange", duration: "monthly", priceValue: 9},
+    {icon: "controller", name: "Advanced", price: "$12/mo", bg: "deeppink", duration: "monthly", priceValue: 12},
+    {icon: "dpad-fill", name: "Pro", price: "$15/mo", bg: "cornflowerblue", duration: "monthly", priceValue: 15}
 ])
 
 watch(monthly, (newValue, oldValue)=>{
     if(newValue === false){
         plans.value[0].price = "$9/mo";
+        plans.value[0].priceValue = 9;
         plans.value[0].duration = "monthly";
         plans.value[1].price = "$12/mo";
         plans.value[1].duration = "monthly";
+        plans.value[1].priceValue = 12;
         plans.value[2].price = "$15/mo";
         plans.value[2].duration = "monthly";
+        plans.value[2].priceValue = 15;
     }else{
         plans.value[0].price = "$90/yr";
         plans.value[0].duration = "yearly";
+        plans.value[0].priceValue = 90;
         plans.value[1].price = "$120/yr";
         plans.value[1].duration = "yearly";
+        plans.value[1].priceValue = 120;
         plans.value[2].price = "$150/yr";
         plans.value[2].duration = "yearly";
+        plans.value[2].priceValue = 150;
     }
 })
 

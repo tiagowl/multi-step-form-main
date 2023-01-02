@@ -8,11 +8,19 @@ export default createStore({
     plan: {
       description: "",
       duration: "",
-      billing: ""
+      billing: "",
+      priceValue: 0
     },
     addons:[]
   },
   getters: {
+    totalPrice(state){
+      const totalAddonsPrice = state.addons.reduce((acumulator, current)=>{
+        return acumulator + current.priceValue;
+      }, 0)
+
+      return totalAddonsPrice + state.plan.priceValue;
+    }
   },
   mutations: {
     subscription(state, payload){
@@ -24,6 +32,7 @@ export default createStore({
       state.plan.billing = payload.price;
       state.plan.description = payload.name;
       state.plan.duration = payload.duration;
+      state.plan.priceValue = payload.priceValue;
     },
     addAddons(state, payload){
       state.addons = payload;
