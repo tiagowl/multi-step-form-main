@@ -58,13 +58,13 @@ console.log(route.path);
 
 </script>
 
-<style scoped >
+<style>
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
   height: auto;
+  font-family: "ubuntu";
 }
 
 .circle-size{
@@ -99,6 +99,11 @@ console.log(route.path);
 .form-label{
   font-size: 0.9rem;
   color: hsl(213, 96%, 18%)
+}
+
+@font-face {
+  font-family: "ubuntu";
+  src: url("../assets/fonts/Ubuntu-Regular.ttf");
 }
 
 @media(max-width: 414px){

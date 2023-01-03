@@ -4,7 +4,7 @@
     <slot></slot>
     <div class="d-flex next-step justify-content-end w-75" :class="['d-flex', 'w-75', {'justify-content-end': props.goBack === false, 'justify-content-between': props.goBack === true}]">
         <p @click="router.back()" v-if="props.goBack === true" class="mt-5" style="cursor: pointer" >Go Back</p>
-        <button @click="navigate" class="btn text-white mt-5" style="background-color: hsl(243, 100%, 62%)">Next step</button>
+        <button @click="navigate" class="btn text-white mt-sm-5 h-25 mt-4 me-4 me-sm-0" style="background-color: hsl(243, 100%, 62%)">Next step</button>
     </div>
 </template>
 

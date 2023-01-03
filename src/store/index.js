@@ -19,7 +19,7 @@ export default createStore({
         return acumulator + current.priceValue;
       }, 0)
 
-      return totalAddonsPrice + state.plan.priceValue;
+      return `+$${totalAddonsPrice + state.plan.priceValue}/${state.plan.duration === "monthly" ? "mo" : "yr"}`
     }
   },
   mutations: {
